@@ -27,8 +27,13 @@ function sexp(source, opts) {
 
     function parseString(quote) {
         var start = ix++;
-        while (ix < len && source[ix] !== quote)
+        var ch;
+        while (ix < len && (ch = source[ix]) !== quote) {
             ix++;
+            if(ch === '\\') {
+                ix++;
+            }
+        }
         if (ix === len)
             throw new Error("parse error - unterminated string");
         ix++;
